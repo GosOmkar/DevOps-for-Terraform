@@ -1,4 +1,4 @@
-# DevOps for Terraform
+# DevOps with Terraform
 
 ## Terraform from Basics to Advanced – Real-World Scenarios
 
