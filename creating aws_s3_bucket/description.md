@@ -1,47 +1,55 @@
-Step-by-Step Guide to Creating an S3 Bucket Using Terraform
-This guide explains how to create an AWS S3 bucket using Terraform in a simple and easy-to-understand way. It covers everything from setting up AWS credentials to writing Terraform code and applying it.
+# Step-by-Step Guide to Creating an S3 Bucket Using Terraform
 
-Prerequisites
+This guide explains how to create an **AWS S3 bucket** using Terraform in a simple and easy-to-understand way. It covers everything from **setting up AWS credentials** to **writing Terraform code and applying it**.
+
+---
+
+## **Prerequisites**  
 Before starting, make sure you have:
 
-An AWS IAM user with Administrator Access
+### **1. An AWS IAM User with Administrator Access**
+- Go to the **[AWS Management Console](https://aws.amazon.com/console/)**.
+- Navigate to **IAM (Identity & Access Management) → Users → Create a User**.
+- Give the user **AdministratorAccess** permissions.
+- Generate **Access Key ID** and **Secret Access Key** (you’ll need these later).
 
-Go to the AWS Management Console.
-Navigate to IAM (Identity & Access Management) → Users → Create a User.
-Give the user AdministratorAccess permissions.
-Generate Access Key ID and Secret Access Key (you’ll need these later).
-AWS CLI installed and configured
+📌 **Official Documentation**: [AWS IAM Users](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html)
 
-Download and install AWS CLI from the official AWS CLI Installation Guide.
-To check if AWS CLI is installed, run:
-sh
-Copy
-Edit
-aws --version
-Configure AWS CLI by running:
-sh
-Copy
-Edit
-aws configure
-This will prompt you to enter:
-Access Key ID
-Secret Access Key
-Default AWS Region (use eu-west-1)
-Output format (keep it as json or leave it blank).
-Terraform installed
+---
 
-Download and install Terraform from the official Terraform Installation Guide.
-Verify installation by running:
-sh
-Copy
-Edit
-terraform -v
-Step 1: Set Up the AWS Provider in Terraform
-Terraform needs a provider to interact with AWS services. Create a new file named terraform_provider.tf and add this code:
+### **2. Install AWS CLI and Configure Credentials**
+- Download and install **AWS CLI** from the **[Installation Guide](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)**.
+- Verify AWS CLI installation:
+  ```sh
+  aws --version
+  ```
+- Configure AWS CLI by running:
+  ```sh
+  aws configure
+  ```
+  This will prompt you to enter:
+  - **Access Key ID**
+  - **Secret Access Key**
+  - **Default AWS Region** (use **eu-west-1**)
+  - **Output format** (keep it as `json` or leave it blank).
 
-hcl
-Copy
-Edit
+---
+
+### **3. Install Terraform**
+- Download and install **Terraform** from the **[Official Installation Guide](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)**.
+- Verify the installation by running:
+  ```sh
+  terraform -v
+  ```
+
+---
+
+## **Step 1: Set Up the AWS Provider in Terraform**
+Terraform needs a provider to interact with AWS services.
+
+Create a new file named `terraform_provider.tf` and add the following code:
+
+```hcl
 terraform {
   required_providers {
     aws = {
@@ -54,14 +62,17 @@ terraform {
 provider "aws" {
   region = "eu-west-1"
 }
-This code tells Terraform to use the AWS provider and specifies the region where resources will be created (eu-west-1).
+```
+This code tells Terraform to:
+- Use the **AWS provider** from HashiCorp.
+- Set the **AWS region** to `eu-west-1`.
 
-Step 2: Write the Terraform Code to Create an S3 Bucket
-Now, create another file named awsS3.tf and add this code:
+---
 
-hcl
-Copy
-Edit
+## **Step 2: Write the Terraform Code to Create an S3 Bucket**
+Create another file named `awsS3.tf` and add the following code:
+
+```hcl
 resource "aws_s3_bucket" "first_bucket" {
   bucket = "gosom-dev-tera"
 
@@ -70,62 +81,64 @@ resource "aws_s3_bucket" "first_bucket" {
     Environment = "Dev"
   }
 }
-This code:
+```
+This Terraform configuration:
+- **Creates an S3 bucket** named `gosom-dev-tera`.
+- **Adds tags** to help identify the bucket easily.
 
-Creates an S3 bucket named gosom-dev-tera.
-Adds tags to help identify the bucket easily.
-Step 3: Initialize and Apply Terraform
-Now, open a terminal and navigate to the folder where you saved the Terraform files. Run these commands one by one:
+---
 
-Initialize Terraform
+## **Step 3: Initialize and Apply Terraform**
+Now, open a terminal and navigate to the folder where you saved the Terraform files. Run the following commands:
 
-sh
-Copy
-Edit
+### **1. Initialize Terraform**
+```sh
 terraform init
+```
 This command downloads the required AWS provider for Terraform.
 
-Check the Terraform Plan
-
-sh
-Copy
-Edit
+### **2. Check the Terraform Plan**
+```sh
 terraform plan
+```
 This will show what Terraform is about to create.
 
-Apply Terraform to Create the S3 Bucket
-
-sh
-Copy
-Edit
+### **3. Apply Terraform to Create the S3 Bucket**
+```sh
 terraform apply
-Terraform will ask for confirmation. Type yes and press Enter.
+```
+Terraform will ask for confirmation. Type `yes` and press **Enter**.
 
-Step 4: Verify the S3 Bucket in AWS Console
-Once Terraform applies the configuration successfully, go to the AWS S3 Console:
-👉 AWS S3 Console
+---
 
-Check if the bucket gosom-dev-tera has been created.
+## **Step 4: Verify the S3 Bucket in AWS Console**
+Once Terraform applies the configuration successfully, go to the **[AWS S3 Console](https://s3.console.aws.amazon.com/s3)**.
 
-Step 5: Delete the S3 Bucket (Optional)
+Check if the bucket **gosom-dev-tera** has been created.
+
+---
+
+## **Step 5: Delete the S3 Bucket (Optional)**
 If you want to remove the S3 bucket, run:
 
-sh
-Copy
-Edit
+```sh
 terraform destroy
-Type yes when prompted.
+```
+Terraform will prompt for confirmation. Type `yes` and press **Enter**.
 
-Conclusion
-You have now successfully created an S3 bucket using Terraform! This process included:
+---
 
-Setting up AWS credentials
-Configuring Terraform with the AWS provider
-Writing Terraform code to create an S3 bucket
-Applying Terraform to provision the bucket
-Verifying the bucket in AWS
+## **Conclusion**
+You have now successfully created an **S3 bucket** using **Terraform**! This process included:
+- Setting up **AWS credentials**
+- Configuring **Terraform with the AWS provider**
+- Writing **Terraform code to create an S3 bucket**
+- Applying **Terraform to provision the bucket**
+- Verifying the bucket in **AWS Console**
+
 For more details, check out:
-🔹 Terraform AWS Documentation
-🔹 Terraform Official Guide
+- 📌 [Terraform AWS Documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
+- 📌 [Terraform Official Guide](https://developer.hashicorp.com/terraform/tutorials/aws-get-started)
 
-Now you’re ready to create more AWS resources using Terraform! 
+Now you’re ready to create more **AWS resources** using Terraform! 🚀
+
